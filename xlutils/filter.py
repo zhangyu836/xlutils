@@ -480,6 +480,37 @@ class BaseWriter:
             wtsheet.vert_split_pos =           rdsheet.vert_split_pos
             wtsheet.vert_split_first_visible = rdsheet.vert_split_first_visible
             
+        # print settings
+        wtsheet.print_headers = rdsheet.print_headers
+        wtsheet.print_grid = rdsheet.print_grid
+        wtsheet.vert_page_breaks = rdsheet.vertical_page_breaks
+        wtsheet.horz_page_breaks = rdsheet.horizontal_page_breaks
+        wtsheet.header_str = rdsheet.header_str
+        wtsheet.footer_str = rdsheet.footer_str
+        wtsheet.print_centered_vert = rdsheet.print_centered_vert
+        wtsheet.print_centered_horz = rdsheet.print_centered_horz
+        wtsheet.left_margin = rdsheet.left_margin
+        wtsheet.right_margin = rdsheet.right_margin
+        wtsheet.top_margin = rdsheet.top_margin
+        wtsheet.bottom_margin = rdsheet.bottom_margin
+        wtsheet.paper_size_code = rdsheet.paper_size_code
+        wtsheet.print_scaling = rdsheet.print_scaling
+        wtsheet.start_page_number = rdsheet.start_page_number
+        wtsheet.fit_width_to_pages = rdsheet.fit_width_to_pages
+        wtsheet.fit_height_to_pages = rdsheet.fit_height_to_pages
+        wtsheet.print_in_rows = rdsheet.print_in_rows
+        wtsheet.portrait = rdsheet.portrait
+        wtsheet.print_colour = not rdsheet.print_not_colour
+        wtsheet.print_draft = rdsheet.print_draft
+        wtsheet.print_notes = rdsheet.print_notes
+        wtsheet.print_notes_at_end = rdsheet.print_notes_at_end
+        wtsheet.print_omit_errors = rdsheet.print_omit_errors
+        wtsheet.print_hres = rdsheet.print_hres
+        wtsheet.print_vres = rdsheet.print_vres
+        wtsheet.header_margin = rdsheet.header_margin
+        wtsheet.footer_margin = rdsheet.footer_margin
+        wtsheet.copies_num = rdsheet.copies_num
+            
     def set_rdsheet(self,rdsheet):
         """
         This should only ever called by a filter that
