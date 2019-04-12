@@ -371,6 +371,15 @@ class BaseWriter:
             # wta.merg = ????
             #
             self.style_list.append(wtxf)
+                
+        # Set the default style and the default font
+        for index, wtxf in enumerate(self.style_list):
+            self.wtbook.add_style(wtxf)
+            if index == 15:
+                return
+        wtxf = self.style_list[0]
+        for _ in range(15 - index):
+            self.wtbook.add_style(wtxf)
    
     def sheet(self,rdsheet,wtsheet_name):
         """
