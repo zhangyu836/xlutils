@@ -291,6 +291,7 @@ class BaseWriter:
         self.wtbook.dates_1904 = rdbook.datemode
         self.wtname = wtbook_name
         self.style_list = []
+        self.font_lsit = []
         self.wtsheet_names = set()
         # the index of the current wtsheet being written
         self.wtsheet_index = 0
@@ -323,6 +324,7 @@ class BaseWriter:
             wtf.family = rdf.family
             wtf.charset = rdf.character_set
             wtf.name = rdf.name
+            self.font_lsit.append(wtf)
             # 
             # protection
             #
@@ -373,13 +375,17 @@ class BaseWriter:
             self.style_list.append(wtxf)
                 
         # Set the default style and the default font
-        for index, wtxf in enumerate(self.style_list):
+        idx = self.wtbook.add_style(None)
+        if idx == 0x10:
+            return
+        for idx, wtxf in enumerate(self.style_list):
             self.wtbook.add_style(wtxf)
-            if index == 15:
+            if idx == 15:
                 return
         wtxf = self.style_list[0]
         for _ in range(15 - index):
             self.wtbook.add_style(wtxf)
+
    
     def sheet(self,rdsheet,wtsheet_name):
         """
@@ -406,7 +412,7 @@ class BaseWriter:
                              'supplied name was %i characters long!'%l_wtsheet_name)
         
         self.rdsheet = rdsheet
-        self.wtsheet_name=wtsheet_name
+        self.wtsheet_name = wtsheet_name
         self.wtsheet = wtsheet = self.wtbook.add_sheet(wtsheet_name,cell_overwrite_ok=True)
         self.wtcols = set() # keep track of which columns have had their attributes set up
         #
@@ -456,7 +462,7 @@ class BaseWriter:
         if not self.sheet_visible and rdsheet.sheet_visible:
             self.wtbook.active_sheet = self.wtsheet_index
             wtsheet.sheet_visible = 1
-        self.wtsheet_index +=1
+        self.wtsheet_index += 1
         
         wtsheet.page_preview = rdsheet.show_in_page_break_preview
         wtsheet.first_visible_row = rdsheet.first_visible_rowx
@@ -490,35 +496,36 @@ class BaseWriter:
             wtsheet.vert_split_first_visible = rdsheet.vert_split_first_visible
             
         # print settings
-        wtsheet.print_headers = rdsheet.print_headers
-        wtsheet.print_grid = rdsheet.print_grid
-        wtsheet.vert_page_breaks = rdsheet.vertical_page_breaks
-        wtsheet.horz_page_breaks = rdsheet.horizontal_page_breaks
-        wtsheet.header_str = rdsheet.header_str
-        wtsheet.footer_str = rdsheet.footer_str
-        wtsheet.print_centered_vert = rdsheet.print_centered_vert
-        wtsheet.print_centered_horz = rdsheet.print_centered_horz
-        wtsheet.left_margin = rdsheet.left_margin
-        wtsheet.right_margin = rdsheet.right_margin
-        wtsheet.top_margin = rdsheet.top_margin
-        wtsheet.bottom_margin = rdsheet.bottom_margin
-        wtsheet.paper_size_code = rdsheet.paper_size_code
-        wtsheet.print_scaling = rdsheet.print_scaling
-        wtsheet.start_page_number = rdsheet.start_page_number
-        wtsheet.fit_width_to_pages = rdsheet.fit_width_to_pages
-        wtsheet.fit_height_to_pages = rdsheet.fit_height_to_pages
-        wtsheet.print_in_rows = rdsheet.print_in_rows
-        wtsheet.portrait = rdsheet.portrait
-        wtsheet.print_colour = not rdsheet.print_not_colour
-        wtsheet.print_draft = rdsheet.print_draft
-        wtsheet.print_notes = rdsheet.print_notes
-        wtsheet.print_notes_at_end = rdsheet.print_notes_at_end
-        wtsheet.print_omit_errors = rdsheet.print_omit_errors
-        wtsheet.print_hres = rdsheet.print_hres
-        wtsheet.print_vres = rdsheet.print_vres
-        wtsheet.header_margin = rdsheet.header_margin
-        wtsheet.footer_margin = rdsheet.footer_margin
-        wtsheet.copies_num = rdsheet.copies_num
+        if hasattr(rdsheet, 'print_headers'):
+            wtsheet.print_headers = rdsheet.print_headers
+            wtsheet.print_grid = rdsheet.print_grid
+            wtsheet.vert_page_breaks = rdsheet.vertical_page_breaks
+            wtsheet.horz_page_breaks = rdsheet.horizontal_page_breaks
+            wtsheet.header_str = rdsheet.header_str
+            wtsheet.footer_str = rdsheet.footer_str
+            wtsheet.print_centered_vert = rdsheet.print_centered_vert
+            wtsheet.print_centered_horz = rdsheet.print_centered_horz
+            wtsheet.left_margin = rdsheet.left_margin
+            wtsheet.right_margin = rdsheet.right_margin
+            wtsheet.top_margin = rdsheet.top_margin
+            wtsheet.bottom_margin = rdsheet.bottom_margin
+            wtsheet.paper_size_code = rdsheet.paper_size_code
+            wtsheet.print_scaling = rdsheet.print_scaling
+            wtsheet.start_page_number = rdsheet.start_page_number
+            wtsheet.fit_width_to_pages = rdsheet.fit_width_to_pages
+            wtsheet.fit_height_to_pages = rdsheet.fit_height_to_pages
+            wtsheet.print_in_rows = rdsheet.print_in_rows
+            wtsheet.portrait = rdsheet.portrait
+            wtsheet.print_colour = not rdsheet.print_not_colour
+            wtsheet.print_draft = rdsheet.print_draft
+            wtsheet.print_notes = rdsheet.print_notes
+            wtsheet.print_notes_at_end = rdsheet.print_notes_at_end
+            wtsheet.print_omit_errors = rdsheet.print_omit_errors
+            wtsheet.print_hres = rdsheet.print_hres
+            wtsheet.print_vres = rdsheet.print_vres
+            wtsheet.header_margin = rdsheet.header_margin
+            wtsheet.footer_margin = rdsheet.footer_margin
+            wtsheet.copies_num = rdsheet.copies_num
             
     def set_rdsheet(self,rdsheet):
         """
