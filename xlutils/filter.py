@@ -291,7 +291,7 @@ class BaseWriter:
         self.wtbook.dates_1904 = rdbook.datemode
         self.wtname = wtbook_name
         self.style_list = []
-        self.font_lsit = []
+        self.font_list = []
         self.wtsheet_names = set()
         # the index of the current wtsheet being written
         self.wtsheet_index = 0
@@ -324,7 +324,7 @@ class BaseWriter:
             wtf.family = rdf.family
             wtf.charset = rdf.character_set
             wtf.name = rdf.name
-            self.font_lsit.append(wtf)
+            self.font_list.append(wtf)
             # 
             # protection
             #
